@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
 import connectDB from "./config/db.js";
-import userRoutes from "./routes/profileRoutes.js";
+import profileRoutes from "./routes/profileRoutes.js";
 import transactionRoutes from "./routes/transactionRoutes.js";
 
 dotenv.config();
