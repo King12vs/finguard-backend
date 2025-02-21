@@ -1,6 +1,6 @@
 import express from "express";
 import { checkJwt } from "../config/auth.js";
-import User from "../models/user.js"; // Ensure this model exists
+import User from "../models/User.js"; // Ensure this model exists
 
 const router = express.Router();
 
