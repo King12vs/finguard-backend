@@ -10,33 +10,23 @@ dotenv.config();
 connectDB();
 
 const app = express();
-
-// ✅ Use proper CORS configuration
-app.use(
-  cors({
-    origin: "*", // Allow all origins (for testing)
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
-
 app.use(express.json());
 app.use(helmet());
 
-// ✅ Add a simple API check route
-app.get("/", (req, res) => {
-  res.send("Finguard Backend is Running...");
-});
+// Configure CORS to allow your frontend origin
+app.use(
+  cors({
+    origin: ["http://localhost:5173"], // Allow requests from your frontend
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true, // If using cookies/sessions
+  })
+);
 
-// ✅ Route Middleware
+// Routes
 app.use("/api/user/profile", profileRoutes);
 app.use("/api/transactions", transactionRoutes);
 
-// ✅ Handle Undefined Routes
-app.use((req, res) => {
-  res.status(404).json({ message: "API route not found" });
-});
-
-// ✅ Set PORT properly
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(process.env.PORT || 5000, () =>
+  console.log(`Server running on port ${process.env.PORT || 5000}`)
+);
