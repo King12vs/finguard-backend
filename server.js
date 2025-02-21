@@ -5,6 +5,7 @@ import helmet from "helmet";
 import connectDB from "./config/db.js";
 import profileRoutes from "./routes/profileRoutes.js";
 import transactionRoutes from "./routes/transactionRoutes.js";
+import serviceRoutes from "./routes/serviceRoutes.js"; // ✅ Import service routes
 
 dotenv.config();
 connectDB();
@@ -13,19 +14,20 @@ const app = express();
 app.use(express.json());
 app.use(helmet());
 
-// Configure CORS to allow your frontend origin
+// ✅ Allow requests from your frontend (Update FRONTEND_URL in Railway)
 app.use(
   cors({
-    origin: ["http://localhost:5173"], // Allow requests from your frontend
+    origin: [process.env.FRONTEND_URL || "http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true, // If using cookies/sessions
+    credentials: true,
   })
 );
 
-// Routes
+// ✅ Routes
 app.use("/api/user/profile", profileRoutes);
 app.use("/api/transactions", transactionRoutes);
+app.use("/api/services", serviceRoutes); // ✅ Add services route
 
 app.listen(process.env.PORT || 5000, () =>
   console.log(`Server running on port ${process.env.PORT || 5000}`)
